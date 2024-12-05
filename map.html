@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高德地图</title>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=1931084b8d8ab250d2215c020c826931"></script>
+    <style>
+        html, body, #container {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            center: [122.0789, 37.5107], 
+            zoom: 16 // 适当调整缩放级别，16是比较适合查看具体位置的级别
+        });
+    </script>
+</body>
+</html>
