@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>高德地图</title>
     <script src="https://webapi.amap.com/maps?v=1.4.15&key=1931084b8d8ab250d2215c020c826931"></script>
+    <script src="https://webapi.amap.com/ui/1.0/main.js"></script> <!-- 导航插件 -->
     <style>
         html, body, #container {
             margin: 0;
@@ -17,10 +18,33 @@
 <body>
     <div id="container"></div>
     <script>
+        // 初始化地图
         var map = new AMap.Map('container', {
             resizeEnable: true,
             center: [122.0789, 37.5107], 
-            zoom: 16 // 适当调整缩放级别，16是比较适合查看具体位置的级别
+            zoom: 16
+        });
+
+        // 加载并初始化定位插件
+        AMap.plugin('AMap.Geolocation', function () {
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true, // 是否使用高精度定位
+                timeout: 10000,           // 设置超时时间，单位为毫秒
+                buttonPosition: 'RB',     // 定位按钮位置，右下角
+                zoomToAccuracy: true      // 定位成功后是否自动调整到合适的视野
+            });
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition();
+
+            // 获取定位成功后的经纬度，并在地图上标注当前位置
+            AMap.event.addListener(geolocation, 'complete', function (data) {
+                // 获取当前位置经纬度
+                var position = data.position;
+                var marker = new AMap.Marker({
+                    position: position
+                });
+                marker.setMap(map);
+            });
         });
     </script>
 </body>
